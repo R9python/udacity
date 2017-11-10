@@ -7,8 +7,8 @@ class Line(object):
 
     NO_NONZERO_ELTS_FOUND_MSG = 'No nonzero elements found'
 
-    #normal_vector表示法向量
-    #直线等式的常量系数
+    '''normal_vector表示法向量
+    直线等式的常量系数'''
     def __init__(self, normal_vector=None, constant_term=None):
         self.dimension = 2
 
@@ -23,9 +23,9 @@ class Line(object):
 
         self.set_basepoint()
 
-    #求ax+by=c的基准点:
-    # 假设x=0 => (0,c/b); y轴上的一个点 
-    # 假设y=0 => (c/a,0); x轴上的一个点
+    '''求ax+by=c的基准点:
+    假设x=0 => (0,c/b); y轴上的一个点 
+    假设y=0 => (c/a,0); x轴上的一个点'''
     def set_basepoint(self):
         try:
             n = self.normal_vector.coordinates
@@ -106,13 +106,27 @@ class Line(object):
 
     #两条直线是否重合
     def isEqualTo(self,l):
+        # 首先对0向量处理
+        if self.normal_vector.isZero():
+            if l.normal_vector.isZero():
+                diff = self.constant_term - l.constant_term
+                return MyDecimal(diff).is_near_zero()
+            else:
+                return False
+        elif l.normal_vector.isZero():
+            return False
+
+        #如果不平行，则直接返回
+        if not self.isParallelTo(l):
+            return False
+
         p1 = self.basepoint #l1上的一个点,我们找基准点比较方便
         p2 = l.basepoint #l2上的一个点
         v =  p1.minus(p2) #连接两个点的向量
         n = self.normal_vector #直线l1的法向量
         return v.isOrthogonalTo(n) #定义:与两条直线的法向量都正交,则两条直线重合
 
-    #计算两条直线的交点
+    #计算两条直线的交点（需要再添加try，防止除数为0）
     def intersection_with(self,l):
         isParalle = self.isParallelTo(l)
         if isParalle:

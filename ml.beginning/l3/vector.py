@@ -62,7 +62,9 @@ class Vector(object):
             #两个向量的大小相乘
             magnitudeValue = self.magnitude() * v.magnitude()
 
-            a = math.acos(Decimal(dotValue)/Decimal(magnitudeValue)) #弧度表示
+            #acos的值范围是-1 to 1
+            adjustValue = min(1,max(Decimal(dotValue)/Decimal(magnitudeValue),-1))
+            a = math.acos(adjustValue) #弧度表示
             b = a*(180./math.pi) #由弧度转换为角度表示
             return a,b 
         except ZeroDivisionError:
@@ -70,12 +72,15 @@ class Vector(object):
 
     #两个向量是否平行
     def isParallelTo(self,v):
-        p = True
-        a = round(self.coordinates[0]/v.coordinates[0],3) 
-        for i in range(len(self.coordinates)):
-            if(round(self.coordinates[i]/v.coordinates[i],3) != a):
-                p =False
-        return p
+        try:
+            p = True
+            a = round(self.coordinates[0]/v.coordinates[0],3) 
+            for i in range(len(self.coordinates)):
+                if(round(self.coordinates[i]/v.coordinates[i],3) != a):
+                    p =False
+            return p
+        except ZeroDivisionError:
+            raise Exception('无法处理0向量')
 
     #两个向量是否平行V2
     def isParallelToV2(self,v):
@@ -159,6 +164,7 @@ class Vector(object):
             resVector.append(num)
 
         return Vector(resVector)
+
 
 
     #输出(print的时候会被调用)

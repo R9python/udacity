@@ -100,10 +100,24 @@ class Plane(object):
     def isParallelTo(self,p):
         n1 = self.normal_vector
         n2 = p.normal_vector
-        return n1.isParallelTo(n2)
+        return n1.isParallelToV2(n2)
 
     #两个平面是否重合
     def isEqualTo(self,p):
+        if self.normal_vector.isZero():
+            if p.normal_vector.isZero():
+                diff = self.constant_term - p.constant_term
+                return MyDecimal(diff).is_near_zero()
+            else:
+                return False
+        elif p.normal_vector.isZero():
+            return False
+
+        # 这段代码启用会导致 linsyscall_step2测试失败（test case 1 failed，test case 4 failed）
+        # 可能Vector中的angle需要按照标准答案编写
+        # if not self.isParallelTo(p):
+        #     return False
+
         p1 = self.basepoint
         p2 = p.basepoint
         v = p1.minus(p2)
