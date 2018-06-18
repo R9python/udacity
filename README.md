@@ -12,3 +12,7 @@ ML.Beginning 机器学习入门 S6
 
 ----L3  Lesson 3 线性代数 Python练习代码.
 
+ML.PRO 机器学习入门 S13
+
+----P5  Project 5 实现一个狗品种识别算法App .
+
