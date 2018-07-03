@@ -1,0 +1,6 @@
+.DS_Store
+test/
+train/
+test.zip
+train.zip
+.ipynb_checkpoints/
