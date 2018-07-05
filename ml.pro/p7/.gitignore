@@ -2,6 +2,8 @@
 test/
 train/
 train_classify/
+valid_classify/
+test_nolabel/
 test.zip
 train.zip
 .ipynb_checkpoints/
