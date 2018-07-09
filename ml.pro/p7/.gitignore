@@ -4,6 +4,8 @@ train/
 train_classify/
 valid_classify/
 test_nolabel/
+unknow/
+saved_models/
 test.zip
 train.zip
 .ipynb_checkpoints/
